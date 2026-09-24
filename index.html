@@ -6,7 +6,7 @@
   <title>TRC Fotos · Torrelodones Rugby Club</title>
   
   <meta name="theme-color" content="#212121">
-  <meta name="description" content="Plataforma oficial de envío de fotografías del Torrelodones Rugby Club.">
+  <meta name="description" content="Plataforma oficial de envío de fotografías a Google Drive del Torrelodones Rugby Club.">
 
   <!-- Tipografías Oficiales -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -24,6 +24,8 @@
       --trc-pitch: #1B4332;
       --trc-white: #FFFFFF;
       --trc-gray: #A0A0A0;
+      --trc-success: #28a745;
+      --trc-error: #dc3545;
     }
 
     * {
@@ -319,6 +321,43 @@
       box-shadow: none;
     }
 
+    /* Estado de subida */
+    .status-alert {
+      padding: 14px;
+      border-radius: 8px;
+      font-size: 14px;
+      margin-top: 14px;
+      display: none;
+    }
+    .status-alert.success {
+      background: rgba(40, 167, 69, 0.15);
+      border: 1px solid var(--trc-success);
+      color: #75b798;
+      display: block;
+    }
+    .status-alert.error {
+      background: rgba(220, 53, 69, 0.15);
+      border: 1px solid var(--trc-error);
+      color: #ea868f;
+      display: block;
+    }
+
+    .progress-bar-container {
+      width: 100%;
+      height: 6px;
+      background: var(--trc-surface-soft);
+      border-radius: 3px;
+      overflow: hidden;
+      margin-top: 12px;
+      display: none;
+    }
+    .progress-bar-fill {
+      height: 100%;
+      width: 0%;
+      background: var(--trc-gold);
+      transition: width 0.3s;
+    }
+
     .footer-info {
       text-align: center;
       margin-top: 24px;
@@ -332,7 +371,7 @@
 </head>
 <body>
 
-  <!-- Cabecera -->
+  <!-- Cabecera Oficial TRC -->
   <header>
     <div class="header-content">
       <div class="brand">
@@ -369,8 +408,8 @@
         </g>
       </svg>
       <div>
-        <div class="hero-title">Envío de Fotografías</div>
-        <div class="hero-sub">Canaliza las imágenes de partidos y eventos al equipo de Comunicación y Google Photos.</div>
+        <div class="hero-title">Envío a Google Drive</div>
+        <div class="hero-sub">Tus fotos se organizarán automáticamente en la carpeta de la categoría en Google Drive.</div>
         <div class="hero-motto">"Construido en el campo. Unidos después."</div>
       </div>
     </div>
@@ -388,17 +427,12 @@
       
       <div class="field-group">
         <label class="field-label" for="matchTitle">Partido / Rival / Evento</label>
-        <input type="text" id="matchTitle" class="text-input" placeholder="Ej: TRC vs Industriales Las Rozas" value="TRC vs Rival">
-      </div>
-
-      <div class="field-group">
-        <label class="field-label" for="matchLocation">Ubicación / Campo</label>
-        <input type="text" id="matchLocation" class="text-input" placeholder="Ej: Campo de Rugby de Torrelodones" value="Campo de Torrelodones">
+        <input type="text" id="matchTitle" class="text-input" placeholder="Ej: TRC vs Industriales" value="Partido Oficial">
       </div>
 
       <div class="field-group">
         <label class="field-label" for="authorName">Fotógrafo / Autor (Familia / Staff)</label>
-        <input type="text" id="authorName" class="text-input" placeholder="Tu nombre para dar crédito en RRSS">
+        <input type="text" id="authorName" class="text-input" placeholder="Tu nombre y apellidos">
       </div>
     </div>
 
@@ -409,26 +443,36 @@
       <div class="upload-dropzone" id="dropzone" onclick="document.getElementById('fileInput').click()">
         <div class="upload-icon">📸</div>
         <div class="upload-text">Toca aquí para seleccionar fotos</div>
-        <div class="upload-sub">Desde la cámara o carrete de tu móvil, o arrastra desde tu ordenador</div>
+        <div class="upload-sub">Desde la galería de tu móvil o arrastra archivos</div>
         <input type="file" id="fileInput" multiple accept="image/*" style="display:none">
       </div>
 
       <div class="preview-grid" id="previewGrid"></div>
       <div id="fileCount" style="margin-top: 10px; font-size: 13px; font-weight: 600; color: var(--trc-gold); text-align: center;"></div>
+
+      <div class="progress-bar-container" id="progressBar">
+        <div class="progress-bar-fill" id="progressFill"></div>
+      </div>
     </div>
+
+    <!-- Alertas -->
+    <div id="statusAlert" class="status-alert"></div>
 
     <!-- Botón Envío -->
     <button id="submitBtn" class="btn-main" disabled onclick="handleUpload()">
-      <span>Subir Fotos al Club TRC</span>
+      <span>Subir Fotos a Google Drive TRC</span>
     </button>
 
     <div class="footer-info">
       Torrelodones Rugby Club · Temporada 2026/27<br>
-      <strong>Acreditado Oficial TRC</strong> · Manual de Identidad Visual
+      <strong>Sincronización Directa Google Drive</strong>
     </div>
   </main>
 
   <script>
+    // URL DE GOOGLE APPS SCRIPT OFICIAL DEL TRC CONECTADA DIRECTAMENTE:
+    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyj8HvrZaNQIRAZkF8P1BdKvWH4Aa1DiBTYZfYefC_osPbykfdreJtFofznKFZGZemneQ/exec";
+
     const CATEGORIES = [
       { id: 'ESCUELA', name: 'Escuela', tag: 'Cantera' },
       { id: 'SUB14', name: 'Sub 14', tag: 'Cantera' },
@@ -462,7 +506,7 @@
         };
         catGrid.appendChild(btn);
       });
-      catBadge.innerText = `🏷️ CATEGORÍA SELECCIONADA: ${selectedCat.name.toUpperCase()}`;
+      catBadge.innerText = `📁 CARPETA DESTINO: ${selectedCat.name.toUpperCase()}`;
     }
 
     renderCategories();
@@ -471,6 +515,9 @@
     const previewGrid = document.getElementById('previewGrid');
     const fileCount = document.getElementById('fileCount');
     const submitBtn = document.getElementById('submitBtn');
+    const progressBar = document.getElementById('progressBar');
+    const progressFill = document.getElementById('progressFill');
+    const statusAlert = document.getElementById('statusAlert');
 
     fileInput.addEventListener('change', (e) => {
       const files = Array.from(e.target.files);
@@ -502,30 +549,92 @@
       });
 
       if (selectedFiles.length > 0) {
-        fileCount.innerText = `${selectedFiles.length} foto(s) lista(s) para enviar`;
+        fileCount.innerText = `${selectedFiles.length} foto(s) lista(s) para enviar a Drive`;
         submitBtn.disabled = false;
-        submitBtn.innerHTML = `<span>Subir ${selectedFiles.length} foto(s) · ${selectedCat.name}</span>`;
+        submitBtn.innerHTML = `<span>Subir ${selectedFiles.length} foto(s) · Carpeta ${selectedCat.name}</span>`;
       } else {
         fileCount.innerText = '';
         submitBtn.disabled = true;
-        submitBtn.innerHTML = `<span>Subir Fotos al Club TRC</span>`;
+        submitBtn.innerHTML = `<span>Subir Fotos a Google Drive TRC</span>`;
       }
     }
 
-    function handleUpload() {
+    function fileToBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => {
+          const base64Clean = reader.result.split(',')[1];
+          resolve({
+            name: file.name,
+            type: file.type,
+            base64: base64Clean
+          });
+        };
+        reader.onerror = error => reject(error);
+      });
+    }
+
+    async function handleUpload() {
       if (selectedFiles.length === 0) return;
-      
-      const title = document.getElementById('matchTitle').value || 'Encuentro';
-      const author = document.getElementById('authorName').value || 'Colaborador TRC';
-      
+
+      const match = document.getElementById('matchTitle').value || 'Encuentro';
+      const author = document.getElementById('authorName').value || 'Familia TRC';
+
       submitBtn.disabled = true;
-      submitBtn.innerHTML = `<span>Canalizando ${selectedFiles.length} fotos...</span>`;
-      
-      setTimeout(() => {
-        alert(`¡Fotos preparadas con éxito!\n\nCategoría: ${selectedCat.name}\nPartido: ${title}\nAutor: ${author}\nTotal fotos: ${selectedFiles.length}\n\nListas para sincronización con Google Photos y el álbum de Comunicación TRC.`);
-        selectedFiles = [];
-        updatePreviews();
-      }, 1000);
+      submitBtn.innerHTML = `<span>Procesando fotos...</span>`;
+      progressBar.style.display = 'block';
+      progressFill.style.width = '20%';
+      statusAlert.className = 'status-alert';
+      statusAlert.style.display = 'none';
+
+      try {
+        progressFill.style.width = '45%';
+        submitBtn.innerHTML = `<span>Preparando ${selectedFiles.length} fotos...</span>`;
+        
+        const filesData = await Promise.all(selectedFiles.map(file => fileToBase64(file)));
+        
+        progressFill.style.width = '75%';
+        submitBtn.innerHTML = `<span>Guardando en Google Drive (${selectedCat.name})...</span>`;
+
+        const payload = {
+          category: selectedCat.name,
+          match: match,
+          author: author,
+          files: filesData
+        };
+
+        const response = await fetch(GOOGLE_SCRIPT_URL, {
+          method: "POST",
+          body: JSON.stringify(payload)
+        });
+
+        const result = await response.json();
+
+        progressFill.style.width = '100%';
+
+        if (result.status === "success") {
+          statusAlert.className = 'status-alert success';
+          statusAlert.innerHTML = `✅ <strong>¡Fotos subidas con éxito a Google Drive!</strong><br>Organizadas en la carpeta <strong>${selectedCat.name}</strong> dentro de "<em>${match}</em>".`;
+          selectedFiles = [];
+          updatePreviews();
+          document.getElementById('authorName').value = '';
+        } else {
+          throw new Error(result.message || "Error al guardar en Drive");
+        }
+
+      } catch (err) {
+        console.error(err);
+        statusAlert.className = 'status-alert error';
+        statusAlert.innerHTML = `❌ <strong>Error al subir:</strong> ${err.message || 'Verifica la conexión con Google Drive'}`;
+      } finally {
+        submitBtn.disabled = selectedFiles.length === 0;
+        submitBtn.innerHTML = `<span>Subir Fotos a Google Drive TRC</span>`;
+        setTimeout(() => {
+          progressBar.style.display = 'none';
+          progressFill.style.width = '0%';
+        }, 1500);
+      }
     }
   </script>
 </body>
