@@ -484,17 +484,17 @@
       <div id="catBadge" style="font-size: 11px; font-weight: 700; color: var(--trc-gold); text-align: right;"></div>
     </div>
 
-    <!-- 2. Detalles -->
+    <!-- 2. Detalles (OPCIONAL) -->
     <div class="card">
-      <div class="section-title">2. Detalles del Encuentro</div>
+      <div class="section-title">2. Detalles del Encuentro <span style="font-size:11px;font-weight:600;color:var(--trc-gray);text-transform:none;letter-spacing:0;margin-left:6px;">(Opcional)</span></div>
       
       <div class="field-group">
-        <label class="field-label" for="matchTitle">Partido / Rival / Evento</label>
-        <input type="text" id="matchTitle" class="text-input" placeholder="Ej: TRC vs Industriales" value="Partido Oficial">
+        <label class="field-label" for="matchTitle">Partido / Rival / Evento <span style="color:#888;">(opcional)</span></label>
+        <input type="text" id="matchTitle" class="text-input" placeholder="Ej: TRC vs Industriales (por defecto: Partido Oficial)">
       </div>
 
       <div class="field-group">
-        <label class="field-label" for="authorName">Fotógrafo / Autor (Familia / Staff)</label>
+        <label class="field-label" for="authorName">Fotógrafo / Autor <span style="color:#888;">(opcional, para dar crédito)</span></label>
         <input type="text" id="authorName" class="text-input" placeholder="Tu nombre y apellidos">
       </div>
     </div>
@@ -648,8 +648,8 @@
     async function handleUpload() {
       if (selectedFiles.length === 0) return;
 
-      const match = document.getElementById('matchTitle').value || 'Encuentro';
-      const author = document.getElementById('authorName').value || 'Familia TRC';
+      const match = document.getElementById('matchTitle').value.trim() || 'Partido Oficial';
+      const author = document.getElementById('authorName').value.trim() || 'Colaborador TRC';
       const count = selectedFiles.length;
 
       submitBtn.disabled = true;
