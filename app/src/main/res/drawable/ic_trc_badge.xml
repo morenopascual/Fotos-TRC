@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="100dp"
+    android:height="100dp"
+    android:viewportWidth="100"
+    android:viewportHeight="100">
+
+    <!-- Official Torrelodones Rugby Club (TRC) Emblem: Yellow Badge with Ant Head -->
+
+    <!-- Yellow Background Circle #FFD900 -->
+    <path
+        android:fillColor="#FFD900"
+        android:pathData="M50,8 A42,42 0 1,1 50,92 A42,42 0 1,1 50,8 Z" />
+
+    <!-- Left Antenna -->
+    <path
+        android:strokeColor="#1E1E1E"
+        android:strokeWidth="4.3"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:pathData="M43.8,41.8 C39.5,37.5 36.1,37.5 26.4,37.5" />
+
+    <!-- Right Antenna -->
+    <path
+        android:strokeColor="#1E1E1E"
+        android:strokeWidth="4.3"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:pathData="M56.2,41.8 C60.5,37.5 63.9,37.5 73.6,37.5" />
+
+    <!-- Ant Head Silhouette in Solid TRC Charcoal/Black -->
+    <path
+        android:fillColor="#1E1E1E"
+        android:pathData="M42.9,39.8 L57.1,39.8 L65.2,48.0 L65.2,60.2 L61.3,66.8 L56.2,60.2 L50.0,71.9 L43.8,60.2 L38.7,66.8 L34.8,60.2 L34.8,48.0 Z" />
+
+    <!-- Left Eye Cutout in TRC Gold #FFD900 -->
+    <path
+        android:fillColor="#FFD900"
+        android:pathData="M43.8,50.4 C44.7,52.3 44.1,54.3 42.6,55.5 C41.2,54.7 41.0,52.7 42.0,50.8 C42.6,49.8 43.4,49.8 43.8,50.4 Z" />
+
+    <!-- Right Eye Cutout in TRC Gold #FFD900 -->
+    <path
+        android:fillColor="#FFD900"
+        android:pathData="M56.2,50.4 C55.3,52.3 55.9,54.3 57.4,55.5 C58.8,54.7 59.0,52.7 58.0,50.8 C57.4,49.8 56.6,49.8 56.2,50.4 Z" />
+
+</vector>

@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <!-- Official TRC Yellow Circle (#FFD100) -->
+  <circle cx="256" cy="256" r="185" fill="#FFD100" />
+
+  <!-- Ant Head Group in official deep black #1E1E1E -->
+  <g fill="#1E1E1E" stroke="#1E1E1E">
+    <!-- Left Antenna: bends outward horizontally with rounded ends -->
+    <path d="M 216 226 C 204 212, 192 206, 162 206" 
+          fill="none" stroke-width="18" stroke-linecap="round" />
+
+    <!-- Right Antenna: bends outward horizontally with rounded ends -->
+    <path d="M 296 226 C 308 212, 320 206, 350 206" 
+          fill="none" stroke-width="18" stroke-linecap="round" />
+
+    <!-- Main Head Polygon matching the authentic TRC Ant mascot -->
+    <path d="M 212,218 
+             L 300,218 
+             L 336,252 
+             L 336,306 
+             L 312,342 
+             L 286,312 
+             L 256,364 
+             L 226,312 
+             L 200,342 
+             L 176,306 
+             L 176,252 Z" 
+          stroke-linejoin="round" stroke-width="6" />
+
+    <!-- Left Eye: almond teardrop tilted inwards -->
+    <path d="M 226,260 C 234,272 231,286 220,292 C 213,286 212,274 218,262 C 221,257 224,257 226,260 Z" 
+          fill="#FFD100" stroke="#FFD100" stroke-width="1" />
+
+    <!-- Right Eye: almond teardrop tilted inwards -->
+    <path d="M 286,260 C 278,272 281,286 292,292 C 299,286 300,274 294,262 C 291,257 288,257 286,260 Z" 
+          fill="#FFD100" stroke="#FFD100" stroke-width="1" />
+  </g>
+</svg>

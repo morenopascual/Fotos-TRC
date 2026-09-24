@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>TRC Fotos · Torrelodones Rugby Club</title>
+  
+  <!-- PWA & Mobile Web Meta -->
+  <meta name="theme-color" content="#212121">
+  <meta name="description" content="Plataforma web oficial del Torrelodones Rugby Club para canalizar fotografías de partidos y entrenamientos.">
+  <link rel="icon" type="image/png" href="trc_logo.png">
+  <link rel="apple-touch-icon" href="trc_logo.png">
+
+  <!-- Inter Google Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --trc-charcoal: #181818;
+      --trc-surface: #212121;
+      --trc-surface-soft: #2A2A2A;
+      --trc-border: #383838;
+      --trc-gold: #FFD100;
+      --trc-gold-hover: #E5BC00;
+      --trc-pitch: #1B4332;
+      --trc-pitch-light: #2D6A4F;
+      --trc-white: #FFFFFF;
+      --trc-gray: #A0A0A0;
+      --trc-gray-dark: #6E6E6E;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: var(--trc-charcoal);
+      color: var(--trc-white);
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      line-height: 1.4;
+      padding-bottom: 60px;
+    }
+
+    /* Container */
+    .container {
+      max-width: 580px;
+      margin: 0 auto;
+      padding: 16px;
+    }
+
+    /* Top Bar */
+    header {
+      background: var(--trc-surface);
+      border-bottom: 2px solid var(--trc-gold);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    }
+    .header-content {
+      max-width: 580px;
+      margin: 0 auto;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .brand img {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+    }
+    .brand h1 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      line-height: 1;
+      color: var(--trc-white);
+    }
+    .brand span {
+      color: var(--trc-gold);
+    }
+    .brand p {
+      font-size: 11px;
+      color: var(--trc-gray);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* Card Hero */
+    .card {
+      background: var(--trc-surface);
+      border: 1px solid var(--trc-border);
+      border-radius: 12px;
+      padding: 18px;
+      margin-bottom: 16px;
+    }
+    .hero-card {
+      background: linear-gradient(145deg, #242424 0%, #1c1c1c 100%);
+      border-left: 4px solid var(--trc-gold);
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+    .hero-card img {
+      width: 64px;
+      height: 64px;
+      flex-shrink: 0;
+    }
+    .hero-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--trc-gold);
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    .hero-sub {
+      font-size: 13px;
+      color: var(--trc-gray);
+      margin-top: 2px;
+    }
+    .hero-motto {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--trc-white);
+      margin-top: 6px;
+      font-style: italic;
+    }
+
+    /* Category Section */
+    .section-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      color: var(--trc-gold);
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .section-title::before {
+      content: '';
+      display: inline-block;
+      width: 4px;
+      height: 16px;
+      background: var(--trc-gold);
+      border-radius: 2px;
+    }
+
+    .categories-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    @media (min-width: 480px) {
+      .categories-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    .cat-btn {
+      background: var(--trc-surface-soft);
+      border: 1.5px solid var(--trc-border);
+      border-radius: 8px;
+      padding: 12px 8px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      color: var(--trc-white);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+    }
+    .cat-btn:hover {
+      border-color: var(--trc-gold);
+    }
+    .cat-btn.active {
+      background: var(--trc-gold);
+      color: #121212;
+      border-color: var(--trc-gold);
+      font-weight: 700;
+      box-shadow: 0 4px 14px rgba(255, 209, 0, 0.35);
+    }
+    .cat-btn.active.cantera {
+      background: var(--trc-pitch);
+      color: var(--trc-white);
+      border-color: var(--trc-gold);
+    }
+    .cat-name {
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .cat-tag {
+      font-size: 9px;
+      text-transform: uppercase;
+      opacity: 0.75;
+      letter-spacing: 0.5px;
+    }
+
+    /* Form Fields */
+    .field-group {
+      margin-bottom: 14px;
+    }
+    .field-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--trc-gray);
+      margin-bottom: 6px;
+      display: block;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .text-input {
+      width: 100%;
+      background: var(--trc-surface-soft);
+      border: 1.5px solid var(--trc-border);
+      border-radius: 8px;
+      padding: 12px 14px;
+      color: var(--trc-white);
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .text-input:focus {
+      border-color: var(--trc-gold);
+    }
+
+    /* Photo Upload Area */
+    .upload-dropzone {
+      border: 2px dashed var(--trc-border);
+      border-radius: 12px;
+      padding: 24px 16px;
+      text-align: center;
+      background: var(--trc-surface-soft);
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-bottom: 14px;
+    }
+    .upload-dropzone:hover, .upload-dropzone.dragover {
+      border-color: var(--trc-gold);
+      background: rgba(255, 209, 0, 0.05);
+    }
+    .upload-icon {
+      font-size: 36px;
+      margin-bottom: 8px;
+    }
+    .upload-text {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--trc-white);
+    }
+    .upload-sub {
+      font-size: 12px;
+      color: var(--trc-gray);
+      margin-top: 4px;
+    }
+
+    /* Thumbnails Preview */
+    .preview-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-top: 14px;
+    }
+    .thumb-item {
+      position: relative;
+      aspect-ratio: 1;
+      border-radius: 6px;
+      overflow: hidden;
+      border: 1px solid var(--trc-border);
+    }
+    .thumb-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .thumb-remove {
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      background: rgba(0,0,0,0.7);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      font-size: 11px;
+      cursor: pointer;
+    }
+
+    /* Primary Action Buttons */
+    .btn-main {
+      width: 100%;
+      background: var(--trc-gold);
+      color: #121212;
+      border: none;
+      border-radius: 8px;
+      padding: 15px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: all 0.15s ease;
+      box-shadow: 0 4px 12px rgba(255, 209, 0, 0.25);
+    }
+    .btn-main:hover {
+      background: var(--trc-gold-hover);
+      transform: translateY(-1px);
+    }
+    .btn-main:disabled {
+      background: var(--trc-surface-soft);
+      color: var(--trc-gray);
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    /* Footer Info */
+    .footer-info {
+      text-align: center;
+      margin-top: 24px;
+      font-size: 12px;
+      color: var(--trc-gray);
+    }
+    .footer-info strong {
+      color: var(--trc-gold);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sticky Header -->
+  <header>
+    <div class="header-content">
+      <div class="brand">
+        <img src="trc_logo.png" alt="Torrelodones Rugby Club">
+        <div>
+          <h1>TRC <span>FOTOS</span></h1>
+          <p>Torrelodones Rugby Club</p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Hero Identity -->
+    <div class="card hero-card">
+      <img src="trc_logo.png" alt="Hormiga TRC">
+      <div>
+        <div class="hero-title">Envío de Fotografías</div>
+        <div class="hero-sub">Canaliza las imágenes de partidos y eventos al equipo de Comunicación y Google Photos.</div>
+        <div class="hero-motto">"Construido en el campo. Unidos después."</div>
+      </div>
+    </div>
+
+    <!-- Category Selector -->
+    <div class="card">
+      <div class="section-title">1. Selecciona Categoría</div>
+      <div class="categories-grid" id="catGrid">
+        <!-- Injected by JS -->
+      </div>
+      <div id="catBadge" style="font-size: 11px; font-weight: 700; color: var(--trc-gold); text-align: right;"></div>
+    </div>
+
+    <!-- Match & Author Details -->
+    <div class="card">
+      <div class="section-title">2. Detalles del Encuentro</div>
+      
+      <div class="field-group">
+        <label class="field-label" for="matchTitle">Partido / Rival / Evento</label>
+        <input type="text" id="matchTitle" class="text-input" placeholder="Ej: TRC vs Industriales Las Rozas" value="TRC vs Rival">
+      </div>
+
+      <div class="field-group">
+        <label class="field-label" for="matchLocation">Ubicación / Campo</label>
+        <input type="text" id="matchLocation" class="text-input" placeholder="Ej: Campo de Rugby de Torrelodones" value="Campo de Torrelodones">
+      </div>
+
+      <div class="field-group">
+        <label class="field-label" for="authorName">Fotógrafo / Autor (Familia / Staff)</label>
+        <input type="text" id="authorName" class="text-input" placeholder="Tu nombre para dar crédito en RRSS">
+      </div>
+    </div>
+
+    <!-- File Upload -->
+    <div class="card">
+      <div class="section-title">3. Selecciona tus Fotos</div>
+
+      <div class="upload-dropzone" id="dropzone" onclick="document.getElementById('fileInput').click()">
+        <div class="upload-icon">📸</div>
+        <div class="upload-text">Toca aquí para seleccionar fotos</div>
+        <div class="upload-sub">Desde tu móvil (Carrete/Cámara) o arrastra desde tu ordenador</div>
+        <input type="file" id="fileInput" multiple accept="image/*" style="display:none">
+      </div>
+
+      <div class="preview-grid" id="previewGrid"></div>
+      <div id="fileCount" style="margin-top: 10px; font-size: 13px; font-weight: 600; color: var(--trc-gold); text-align: center;"></div>
+    </div>
+
+    <!-- Submit Button -->
+    <button id="submitBtn" class="btn-main" disabled onclick="handleUpload()">
+      <span>Subir Fotos al Club TRC</span>
+    </button>
+
+    <div class="footer-info">
+      Torrelodones Rugby Club · Temporada 2026/27<br>
+      <strong>Acreditado Oficial TRC</strong> · Manual de Identidad Visual
+    </div>
+  </main>
+
+  <script>
+    const CATEGORIES = [
+      { id: 'ESCUELA', name: 'Escuela', tag: 'Cantera', isCantera: true },
+      { id: 'SUB14', name: 'Sub 14', tag: 'Cantera', isCantera: true },
+      { id: 'SUB16', name: 'Sub 16', tag: 'Cantera', isCantera: true },
+      { id: 'SUB18', name: 'Sub 18', tag: 'Cantera', isCantera: true },
+      { id: 'SEN_MASC', name: 'Senior Masc.', tag: 'Senior', isCantera: false },
+      { id: 'SEN_FEM', name: 'Senior Fem.', tag: 'Senior', isCantera: false },
+      { id: 'TOUCH', name: 'Touch', tag: 'Club', isCantera: false },
+      { id: 'VET', name: 'Veteranos', tag: '+35', isCantera: false }
+    ];
+
+    let selectedCat = CATEGORIES[0];
+    let selectedFiles = [];
+
+    // Render category grid
+    const catGrid = document.getElementById('catGrid');
+    const catBadge = document.getElementById('catBadge');
+
+    function renderCategories() {
+      catGrid.innerHTML = '';
+      CATEGORIES.forEach(cat => {
+        const btn = document.createElement('div');
+        const isActive = cat.id === selectedCat.id;
+        btn.className = `cat-btn ${isActive ? 'active' : ''} ${cat.isCantera ? 'cantera' : ''}`;
+        btn.innerHTML = `
+          <div class="cat-name">${cat.name}</div>
+          <div class="cat-tag">${cat.tag}</div>
+        `;
+        btn.onclick = () => {
+          selectedCat = cat;
+          renderCategories();
+        };
+        catGrid.appendChild(btn);
+      });
+      catBadge.innerText = selectedCat.isCantera ? '🏷️ GRUPO: ESCUELA / CANTERA' : '🏷️ GRUPO: SÉNIOR / CLUB';
+    }
+
+    renderCategories();
+
+    // File input handling
+    const fileInput = document.getElementById('fileInput');
+    const previewGrid = document.getElementById('previewGrid');
+    const fileCount = document.getElementById('fileCount');
+    const submitBtn = document.getElementById('submitBtn');
+
+    fileInput.addEventListener('change', (e) => {
+      const files = Array.from(e.target.files);
+      selectedFiles = [...selectedFiles, ...files];
+      updatePreviews();
+    });
+
+    function updatePreviews() {
+      previewGrid.innerHTML = '';
+      selectedFiles.forEach((file, idx) => {
+        const thumb = document.createElement('div');
+        thumb.className = 'thumb-item';
+        
+        const img = document.createElement('img');
+        img.src = URL.createObjectURL(file);
+        
+        const btn = document.createElement('button');
+        btn.className = 'thumb-remove';
+        btn.innerText = '×';
+        btn.onclick = (ev) => {
+          ev.stopPropagation();
+          selectedFiles.splice(idx, 1);
+          updatePreviews();
+        };
+
+        thumb.appendChild(img);
+        thumb.appendChild(btn);
+        previewGrid.appendChild(thumb);
+      });
+
+      if (selectedFiles.length > 0) {
+        fileCount.innerText = `${selectedFiles.length} fotos seleccionadas para subir`;
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = `<span>Subir ${selectedFiles.length} fotos (${selectedCat.name})</span>`;
+      } else {
+        fileCount.innerText = '';
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = `<span>Subir Fotos al Club TRC</span>`;
+      }
+    }
+
+    function handleUpload() {
+      if (selectedFiles.length === 0) return;
+      
+      const title = document.getElementById('matchTitle').value || 'Encuentro';
+      const author = document.getElementById('authorName').value || 'Colaborador TRC';
+      
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = `<span>Procesando y Canalizando (${selectedFiles.length} fotos)...</span>`;
+      
+      setTimeout(() => {
+        alert(`¡Fotos preparadas con éxito!\n\nCategoría: ${selectedCat.name}\nPartido: ${title}\nAutor: ${author}\nTotal fotos: ${selectedFiles.length}\n\nListas para sincronización con Google Photos y el álbum de Comunicación TRC.`);
+        selectedFiles = [];
+        updatePreviews();
+      }, 1200);
+    }
+  </script>
+</body>
+</html>

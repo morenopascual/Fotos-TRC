@@ -1,0 +1,6 @@
+{
+  "name": "TRC Fotos",
+  "description": "Subida rápida de fotos para el Torrelodones Rugby Club (TRC) organizadas por categorías hacia Google Photos.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

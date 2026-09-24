@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">TRC Fotos</string>
+    <string name="club_photos_title">Torrelodones Rugby Club</string>
+    <string name="club_manifesto">Construido en el campo. Unidos después.</string>
+    <string name="club_full_name">Torrelodones Rugby Club — TRC</string>
+    <string name="category_sub10">Sub 10</string>
+    <string name="category_sub12">Sub 12</string>
+    <string name="category_sub14">Sub 14</string>
+    <string name="category_sub16">Sub 16</string>
+    <string name="category_sub18">Sub 18</string>
+    <string name="category_veteranos">Veteranos</string>
+    <string name="btn_pick_photos">Seleccionar fotos</string>
+    <string name="btn_add_more">Añadir más fotos</string>
+    <string name="btn_send_photos">Enviar al Club</string>
+    <string name="btn_send_google_photos">Enviar a Google Photos</string>
+    <string name="label_select_category">Selecciona categoría:</string>
+    <string name="settings_title">Ajustes del Club</string>
+    <string name="history_title">Historial de Envíos</string>
+</resources>
